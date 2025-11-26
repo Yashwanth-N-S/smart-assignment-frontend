@@ -10,6 +10,7 @@ const MySubmissions = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
+  const BACKEND_URL = "https://smart-assignment-backend.onrender.com";
 
 
   useEffect(() => {
@@ -200,7 +201,8 @@ const MySubmissions = () => {
                         {submission.files.map((file, index) => (
                           <a 
                             key={index}
-                            href={`http://localhost:5000/${file.path}`} 
+                            href={`${BACKEND_URL}/${file.path}`}
+ 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="btn btn-outline"
