@@ -11,6 +11,7 @@ const MySubmissions = () => {
   const [filter, setFilter] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
   const BACKEND_URL = "https://smart-assignment-backend.onrender.com";
+  
 
 
   useEffect(() => {
@@ -198,22 +199,28 @@ const MySubmissions = () => {
                     <div className="mb-3">
                       <strong>📎 Attached Files:</strong>
                       <div style={{ marginTop: 'var(--space-sm)' }}>
-                        {submission.files.map((file, index) => (
-                          <a 
-                            key={index}
-                            href={`${BACKEND_URL}/${file.path}`}
- 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="btn btn-outline"
-                            style={{ marginRight: 'var(--space-sm)', marginBottom: 'var(--space-sm)' }}
-                          >
-                            📄 {file.filename}
-                          </a>
-                        ))}
+                        {submission.files.map((file, index) => {
+                          // Ensure path does NOT start with localhost or leading slash
+                          const cleanPath = file.path.replace(/^\/+/, "");
+                          const fileUrl = `${BACKEND_URL}/${cleanPath}`;
+
+                          return (
+                            <a 
+                              key={index}
+                              href={fileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn-outline"
+                              style={{ marginRight: 'var(--space-sm)', marginBottom: 'var(--space-sm)' }}
+                            >
+                              📄 {file.filename}
+                            </a>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
+
                   
                   {isGraded && (
                     <div className="p-3 rounded" style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border)' }}>

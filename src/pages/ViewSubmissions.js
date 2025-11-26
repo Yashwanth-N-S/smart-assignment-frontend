@@ -16,7 +16,6 @@ const ViewSubmissions = () => {
   const [sortBy, setSortBy] = useState('submittedAt');
   const BACKEND_URL = "https://smart-assignment-backend.onrender.com";
 
-
   const fetchData = React.useCallback(async () => {
     try {
       setLoading(true);
@@ -249,25 +248,34 @@ const ViewSubmissions = () => {
                           </div>
                         )}
 
-                        {submission.files.length > 0 && (
+                
+
+                        {submission.files && submission.files.length > 0 && (
                           <div className="mb-3">
-                            <h5 className="mb-2">📎 Attached Files</h5>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-                              {submission.files.map((file, index) => (
-                                <a 
-                                  key={index}
-                                  href={`${BACKEND_URL}/${file.path}`}
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="btn btn-outline"
-                                  style={{ textAlign: 'left', justifyContent: 'flex-start' }}
-                                >
-                                  📄 {file.filename}
-                                </a>
-                              ))}
+                            <strong>📎 Attached Files:</strong>
+                            <div style={{ marginTop: 'var(--space-sm)' }}>
+                              {submission.files.map((file, index) => {
+                                // Ensure path does NOT start with localhost or leading slash
+                                const cleanPath = file.path.replace(/^\/+/, "");
+                                const fileUrl = `${BACKEND_URL}/${cleanPath}`;
+
+                                return (
+                                  <a 
+                                    key={index}
+                                    href={fileUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn btn-outline"
+                                    style={{ marginRight: 'var(--space-sm)', marginBottom: 'var(--space-sm)' }}
+                                  >
+                                    📄 {file.filename}
+                                  </a>
+                                );
+                              })}
                             </div>
                           </div>
                         )}
+
                       </div>
 
                       <div>
